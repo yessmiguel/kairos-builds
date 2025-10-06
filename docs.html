@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Kairos — Manual de instalación v2.1.0 (Revisado)</title>
+<style>
+  :root{
+    --bg: #fffaf5;
+    --card: #fff7f0;
+    --accent: #d87f4a;
+    --accent-2: #f2c9b0;
+    --muted: #6b6b6b;
+    --heading: #4a2b20;
+    --maxw: 980px;
+    --radius: 12px;
+  }
+  html,body{height:100%;background:var(--bg);font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; color:#2b2b2b;margin:0;padding:24px;}
+  .container{max-width:var(--maxw);margin:0 auto;background:linear-gradient(180deg, #ffffffe6, #fffafae6);padding:28px;border-radius:16px;box-shadow:0 6px 24px rgba(56,30,12,0.08);}
+  header{display:flex;align-items:center;gap:16px;margin-bottom:18px;}
+  header h1{margin:0;font-size:1.6rem;color:var(--heading);}
+  header p{margin:0;color:var(--muted);font-size:0.95rem;}
+  .toc{background:var(--card);padding:16px;border-radius:12px;margin-bottom:20px;border:1px solid rgba(216,127,74,0.08);}
+  .toc h2{margin:0 0 8px 0;font-size:1rem;color:var(--heading);}
+  .toc ul{margin:0;padding-left:18px;color:var(--muted);}
+  .section{background:white;padding:18px;border-radius:12px;margin-bottom:16px;border-left:4px solid var(--accent-2);}
+  h2.section-title{margin-top:0;color:var(--heading);}
+  p{line-height:1.5;margin:8px 0;color:#2f2f2f;}
+  ul{margin:8px 0 8px 20px;}
+  li{margin:6px 0;}
+  code{background:#f7f1ee;padding:2px 6px;border-radius:6px;font-family:monospace;font-size:0.95em;}
+  .check{display:inline-block;padding:6px 10px;border-radius:999px;background:linear-gradient(90deg,var(--accent-2),#ffe7d9);color:var(--heading);font-weight:600;}
+  footer{font-size:0.9rem;color:var(--muted);margin-top:20px;padding-top:12px;border-top:1px dashed rgba(0,0,0,0.05);}
+  a.anchor{color:var(--accent);text-decoration:none;}
+  .two-col{display:grid;grid-template-columns:1fr 320px;gap:18px;}
+  @media (max-width:880px){.two-col{grid-template-columns:1fr;}}
+  .side-card{background:var(--card);padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.03);}
+  .pre{background:#fff7f5;padding:12px;border-radius:8px;border:1px solid rgba(0,0,0,0.03);overflow:auto;}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="logo" style="font-size:28px">⚙️</div>
+    <div>
+      <h1>Kairos — Manual de instalación v2.1.0</h1>
+    </div>
+  </header>
+
+  <div class="toc">
+    <h2>Contenido</h2>
+    <ul>
+      <li><a class="anchor" href="#glosario">Glosario</a></li>
+      <li><a class="anchor" href="#hardware">Hardware necesario</a></li>
+      <li><a class="anchor" href="#instalacion">Instalación (Resumen de pasos)</a></li>
+      <li><a class="anchor" href="#paso1">Paso 1 — Conectar el hardware</a></li>
+      <li><a class="anchor" href="#paso2">Paso 2 — Instalar y configurar Signal</a></li>
+      <li><a class="anchor" href="#paso3">Paso 3 — Instalar KairosLauncher</a></li>
+      <li><a class="anchor" href="#paso4">Paso 4 — Verificación</a></li>
+      <li><a class="anchor" href="#troubleshooting">Troubleshooting</a></li>
+      <li><a class="anchor" href="#contacto">Notas y enlaces</a></li>
+    </ul>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <section id="glosario" class="section">
+        <h2 class="section-title">Glosario</h2>
+        <p>Este glosario define los términos principales utilizados en el manual:</p>
+        <ul>
+          <li><strong>Botón SOS</strong>: Botón físico USB que, al presionarlo, inicia una llamada de emergencia.</li>
+          <li><strong>Watchdog</strong>: Servicio (demonio) que supervisa el botón SOS y ejecuta el proceso de llamada cuando se detecta un evento.</li>
+          <li><strong>Tótem</strong>: Dispositivo Android tipo tótem digital que actúa como punto de interacción para el usuario y despliega publiidad.</li>
+          <li><strong>Receptor</strong>: Persona que recibe la llamada SOS (por ejemplo, personal médico o paramédico).</li>
+          <li><strong>App ApantallaNet</strong>: Aplicación que gestiona la reproducción de publicidad en el tótem.</li>
+          <li><strong>App KairosLauncher</strong>: Aplicación responsable de instalar y gestionar los scripts que controlan la llamada y el reinicio automático de los procesos.</li>
+        </ul>
+      </section>
+
+      <section id="hardware" class="section">
+        <h2 class="section-title">Hardware necesario</h2>
+        <p>Por cada tótem, se requiere el siguiente hardware mínimo para el correcto funcionamiento de Kairos:</p>
+        <ul>
+          <li>Botón de emergencia USB (Botón SOS).</li>
+          <li>Micrófono USB.</li>
+          <li>Hub USB con al menos 4 puertos y un cable de 1 m para facilitar el acceso desde la parte trasera del tótem.</li>
+          <li>Mouse y teclado USB (preferentemente inalámbricos o con receptor único). <em>No se recomienda el uso de dispositivos Bluetooth para el mouse o teclado.</em></li>
+          <li>Un teléfono móvil con línea activa para recibir SMS (requerido durante la configuración de Signal).</li>
+        </ul>
+      </section>
+
+      <section id="instalacion" class="section">
+        <h2 class="section-title">Instalación — Resumen de pasos</h2>
+        <p>Los pasos generales para la instalación son los siguientes:</p>
+        <ol>
+          <li>Conectar el hardware necesario.</li>
+          <li>Instalar y configurar la aplicación <em>Signal</em> en el tótem y en el dispositivo del receptor.</li>
+          <li>Instalar y configurar <em>KairosLauncher</em>.</li>
+          <li>Verificar la instalación y realizar pruebas de funcionamiento.</li>
+        </ol>
+      </section>
+
+      <section id="paso1" class="section">
+        <h2 class="section-title">Paso 1 — Conectar el hardware</h2>
+        <p>Siga los pasos a continuación para conectar correctamente el hardware en el tótem:</p>
+        <ol>
+          <li>Abrir la carcasa del tótem y conectar el hub USB en uno de los puertos disponibles. Pase el cable del hub por la compuerta trasera para que el hub quede accesible desde la parte posterior.</li>
+          <li>Conectar el teclado y el mouse al hub USB.</li>
+          <li>Conectar el <strong>Botón SOS</strong> al hub USB.</li>
+          <li>Conectar el micrófono USB al hub.</li>
+          <li>Conectar el tótem a la corriente eléctrica y encenderlo.</li>
+        </ol>
+        <p>Verifique visualmente que los indicadores del hardware estén activos y que el sistema reconozca los dispositivos conectados.</p>
+      </section>
+
+      <section id="paso2" class="section">
+        <h2 class="section-title">Paso 2 — Instalar y configurar Signal</h2>
+        <p>Este paso incluye la configuración de Signal tanto en el tótem como en el teléfono del receptor.</p>
+
+        <h3>Configurar Signal en el tótem</h3>
+        <ol>
+          <li>Desde el tótem, abra Google Play Store e instale la aplicación <em>Signal</em>.</li>
+          <li>Siga las instrucciones de la aplicación para registrar el número: introduzca el código de confirmación recibido por SMS.</li>
+          <li>Asigne el PIN de Signal: <code>112233</code>.</li>
+          <li>En la pestaña <em>Chats</em>, cree un nuevo chat con el número del receptor y envíe el mensaje: <em>"Bienvenido a Kairos"</em>. Verifique que la conversación aparezca en la parte superior de la lista de chats.</li>
+          <li>Nota: Para descargar Signal debe existir una sesión activa en Google Play Store. Las credenciales se almacenan en 1Password.</li>
+        </ol>
+
+        <h3>Configurar Signal en el receptor</h3>
+        <ol>
+          <li>Instale <em>Signal</em> en el teléfono del receptor desde la Play Store.</li>
+          <li>Al recibir el mensaje de bienvenida desde el tótem, el receptor debe aceptar o confirmar el contacto para habilitar la recepción de llamadas.</li>
+        </ol>
+
+        <p><strong>Importante:</strong> Si el receptor no acepta la conversación, las llamadas no se podrán iniciar correctamente.</p>
+      </section>
+
+      <section id="paso3" class="section">
+        <h2 class="section-title">Paso 3 — Instalar KairosLauncher</h2>
+        <p>Para instalar KairosLauncher en el tótem:</p>
+        <ol>
+          <li>Abra Chrome en el tótem y visite <a href="https://yessmiguel.github.io/kairos-builds/" target="_blank">la página de descargas</a> proporcionada por el proveedor del sistema.</li>
+          <li>Pulse el botón de descarga correspondiente a la versión de KairosLauncher.</li>
+          <li>Siga las instrucciones de instalación del paquete APK en Android.</li>
+        </ol>
+        <p>Una vez instalado, confirme que la aplicación aparece en la lista de aplicaciones del tótem.</p>
+      </section>
+
+      <section id="paso4" class="section">
+        <h2 class="section-title">Paso 4 — Verificar la instalación</h2>
+        <p>Complete la siguiente lista de verificación para confirmar que la instalación fue exitosa:</p>
+        <ul>
+          <li><span class="check">✅</span> Micrófono conectado al hub USB y funcionando.</li>
+          <li><span class="check">✅</span> Botón SOS conectado al hub USB</li>
+          <li><span class="check">✅</span> Aplicación Signal instalada y configurada, con la conversación del receptor visible y activa en la pestaña de chats, corroborar ademas que es la primera conversación de la lista.</li>
+          <li><span class="check">✅</span> App KairosLauncher instalada y visible en la lista de aplicaciones.</li>
+          <li><span class="check">✅</span> Reiniciar el tótem y confirmar que la publicidad se inicia automáticamente. Luego, realizar una prueba de llamada con el botón.</li>
+          <li><span class="check">🚀</span> Si la llamada se realiza correctamente, la instalación se ha completado con éxito.</li>
+        </ul>
+      </section>
+
+      <section id="troubleshooting" class="section">
+        <h2 class="section-title">Troubleshooting</h2>
+        <p>Problemas comunes y acciones recomendadas:</p>
+        <ul>
+          <li><strong>La llamada no se puede concretar porque la aplicación Signal cambió su interfaz:</strong> Reinicie el tótem y si el problema persiste contacte al equipo de desarrollo.</li>
+          <li><strong>Rendimiento interrumpido o la app se congela:</strong> Reinicie el tótem. Si el problema persiste, notifique a soporte y considere reinstalar la app.</li>
+          <li><strong>La aplicación se congela durante la llamada:</strong> Compruebe la conexión de red — utilice una red Wi‑Fi estable con al menos 80 Mbps y reinicie el tótem.</li>
+          <li><strong>Los scripts no se ejecutan por lentitud:</strong> Reinicie el tótem.</li>
+          <li><strong>Totem desconectado de la red:</strong> Reconectar el cable de red, verificar la conexión a internet y reiniciar el tótem.</li>
+          <li><strong>Botón o cablería del botón visiblemente dañada:</strong> Reemplace el botón o el cable según corresponda.</li>
+          <li><strong>La llamada se reinicia en bucle:</strong> Verificar que el botón y el micrófono estén correctamente conectados; reiniciar el tótem.</li>
+        </ul>
+      </section>
+
+      <section id="contacto" class="section">
+        <h2 class="section-title">Notas y enlaces</h2>
+        <p>Enlaces útiles:</p>
+        <ul>
+          <li><a href="https://yessmiguel.github.io/kairos-builds/" target="_blank">Repositorio de builds de Kairos</a></li>
+        </ul>
+        <p>Si necesita soporte adicional, incluya en su solicitud: modelo del tótem, y descripción detallada del comportamiento observado y checklist de hardware conectado.</p>
+      </section>
+    </div>
+
+    <aside class="side-card">
+      <h3 style="margin-top:0">Resumen rápido</h3>
+      <p class="pre"><strong>Objetivo:</strong> Instalar y verificar el sistema Kairos en un tótem Android para permitir llamadas SOS entre el tótem y un receptor.</p>
+      <p class="pre"><strong>Tiempo estimado de instalación:</strong> 30–45 minutos por tótem (dependiendo de la familiaridad del instalador con Android).</p>
+      <h4>Checklist</h4>
+      <ul>
+        <li>Hardware conectado</li>
+        <li>Signal configurado</li>
+        <li>KairosLauncher instalado</li>
+        <li>Prueba de llamada exitosa</li>
+      </ul>
+    </aside>
+  </div>
+</div>
+</body>
+</html>
