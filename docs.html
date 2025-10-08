@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Kairos — Manual de instalación v2.1.0 (Revisado)</title>
+<title>MediKairos — Manual de instalación v2.1.0 (Revisado)</title>
 <style>
   :root{
     --bg: #CFE8ED;
@@ -36,6 +36,54 @@
   @media (max-width:880px){.two-col{grid-template-columns:1fr;}}
   .side-card{background:var(--card);padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.03);}
   .pre{background:#e7f4f6;padding:12px;border-radius:8px;border:1px solid rgba(0,0,0,0.03);overflow:auto;}
+
+  /* --- Cuadros de mensaje generales --- */
+.message {
+  border-left: 4px solid;
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+  background: #fff;
+}
+
+/* --- Tipos de mensajes --- */
+.message.info {
+  border-color: #007bff;
+  background: #e9f4ff;
+  color: #003366;
+}
+
+.message.warning {
+  border-color: #ffb300;
+  background: #fff8e1;
+  color: #5d4a00;
+}
+
+.message.error {
+  border-color: #e53935;
+  background: #fdecea;
+  color: #7a1a1a;
+}
+
+/* --- Iconos opcionales --- */
+.message::before {
+  content: "ℹ️";
+  font-size: 1.3em;
+  margin-right: 0.5em;
+  vertical-align: middle;
+}
+
+.message.warning::before {
+  content: "⚠️";
+}
+
+.message.error::before {
+  content: "❌";
+}
+
 </style>
 </head>
 <body>
@@ -43,7 +91,7 @@
   <header>
     <div class="logo" style="font-size:28px">⚙️</div>
     <div>
-      <h1>Kairos — Manual de instalación v2.1.0</h1>
+      <h1>MediKairos — Manual de instalación v2.1.0</h1>
     </div>
   </header>
 
@@ -57,7 +105,8 @@
       <li><a class="anchor" href="#paso2">Paso 2 — Instalar y configurar Signal</a></li>
       <li><a class="anchor" href="#paso3">Paso 3 — Instalar KairosLauncher</a></li>
       <li><a class="anchor" href="#paso4">Paso 4 — Verificación</a></li>
-      <li><a class="anchor" href="#troubleshooting">Troubleshooting</a></li>
+      <li><a class="anchor" href="#troubleshooting">Apéndice A - Troubleshooting</a></li>
+      <li><a class="anchor" href="#troubleshooting">Apéndice B - Operación del totem</a></li>
       <li><a class="anchor" href="#contacto">Notas y enlaces</a></li>
     </ul>
   </div>
@@ -68,8 +117,7 @@
         <h2 class="section-title">Glosario</h2>
         <p>Este glosario define los términos principales utilizados en el manual:</p>
         <ul>
-          <li><strong>Botón SOS</strong>: Botón físico USB que, al presionarlo, inicia una llamada de emergencia.</li>
-          <li><strong>Watchdog</strong>: Servicio (demonio) que supervisa el botón SOS y ejecuta el proceso de llamada cuando se detecta un evento.</li>
+          <li><strong>Botón de emergencia</strong>: Botón físico que, al presionarlo, inicia una llamada de emergencia.</li>
           <li><strong>Tótem</strong>: Dispositivo Android tipo tótem digital que actúa como punto de interacción para el usuario y despliega publiidad.</li>
           <li><strong>Receptor</strong>: Persona que recibe la llamada SOS (por ejemplo, personal médico o paramédico).</li>
           <li><strong>App ApantallaNet</strong>: Aplicación que gestiona la reproducción de publicidad en el tótem.</li>
@@ -79,11 +127,11 @@
 
       <section id="hardware" class="section">
         <h2 class="section-title">Hardware necesario</h2>
-        <p>Por cada tótem, se requiere el siguiente hardware mínimo para el correcto funcionamiento de Kairos:</p>
+        <p>Por cada tótem, se requiere el siguiente hardware mínimo para la correcta instalación de MediKairos:</p>
         <ul>
-          <li>Botón de emergencia USB (Botón SOS).</li>
+          <li>Botón de emergencia (FootSwitch USB).</li>
           <li>Micrófono USB.</li>
-          <li>Hub USB con al menos 4 puertos y un cable de 1 m para facilitar el acceso desde la parte trasera del tótem.</li>
+          <li>Hub USB con al menos 4 puertos y un cable de 1m para facilitar el acceso desde la parte trasera del tótem.</li>
           <li>Mouse y teclado USB (preferentemente inalámbricos o con receptor único). <em>No se recomienda el uso de dispositivos Bluetooth para el mouse o teclado.</em></li>
           <li>Un teléfono móvil con línea activa para recibir SMS (requerido durante la configuración de Signal).</li>
         </ul>
@@ -95,7 +143,7 @@
         <ol>
           <li>Conectar el hardware necesario.</li>
           <li>Instalar y configurar la aplicación <em>Signal</em> en el tótem y en el dispositivo del receptor.</li>
-          <li>Instalar y configurar <em>KairosLauncher</em>.</li>
+          <li>Instalar y configurar aplicación <em>KairosLauncher</em>.</li>
           <li>Verificar la instalación y realizar pruebas de funcionamiento.</li>
         </ol>
       </section>
@@ -104,14 +152,18 @@
         <h2 class="section-title">Paso 1 — Conectar el hardware</h2>
         <p>Siga los pasos a continuación para conectar correctamente el hardware en el tótem:</p>
         <ol>
-          <li>Abrir la carcasa del tótem y conectar el hub USB en uno de los puertos disponibles. Pase el cable del hub por la compuerta trasera para que el hub quede accesible desde la parte posterior.</li>
+          <li>Abrir la carcasa del tótem y conectar el hub USB en uno de los puertos disponibles. Se recomienda pasar el cable del hub por la compuerta trasera para que el hub quede accesible desde la parte posterior.</li>
           <li>Conectar el teclado y el mouse al hub USB.</li>
-          <li>Conectar el <strong>Botón SOS</strong> al hub USB.</li>
+          <li>Conectar el <strong>Botón de emergencia</strong> al hub USB.</li>
           <li>Conectar el micrófono USB al hub.</li>
-          <li>Conectar el tótem a la corriente eléctrica y encenderlo.</li>
+          <li>Conectar el tótem a internet con un cable Ethernet a la ranura de la base. ⚠️ Es importante que el totem este conectado a internet durante la instalación, pruebas y operación de MediKairos</li>
+          <li>Conectar el tótem a la corriente eléctrica para encenderlo.</li>
         </ol>
         <p>Verifique visualmente que los indicadores del hardware estén activos y que el sistema reconozca los dispositivos conectados.</p>
       </section>
+      <div class="message warning">
+        Es importante que el totem este conectado a internet durante la instalación, pruebas y operación de MediKairos
+      </div>
 
       <section id="paso2" class="section">
         <h2 class="section-title">Paso 2 — Instalar y configurar Signal</h2>
@@ -122,54 +174,79 @@
           <li>Desde el tótem, abra Google Play Store e instale la aplicación <em>Signal</em>.</li>
           <li>Siga las instrucciones de la aplicación para registrar el número: introduzca el código de confirmación recibido por SMS.</li>
           <li>Asigne el PIN de Signal: <code>112233</code>.</li>
-          <li>En la pestaña <em>Chats</em>, cree un nuevo chat con el número del receptor y envíe el mensaje: <em>"Bienvenido a Kairos"</em>. Verifique que la conversación aparezca en la parte superior de la lista de chats.</li>
-          <li>Nota: Para descargar Signal debe existir una sesión activa en Google Play Store. Las credenciales se almacenan en 1Password.</li>
+          <li>En la pestaña <em>Chats</em>, cree un nuevo chat con el número del receptor y envíe el mensaje: <em>"Bienvenido a MediKairos"</em>. Verifique que la conversación aparezca en la parte superior de la lista de chats.</li>
         </ol>
+
+        <div class="message info">Nota: Para descargar Signal debe existir una sesión activa en Google Play Store. Las credenciales se las proporcionará el equipo de desarrollo.</div>
 
         <h3>Configurar Signal en el receptor</h3>
         <ol>
-          <li>Instale <em>Signal</em> en el teléfono del receptor desde la Play Store.</li>
+          <li>Instale la aplicación de <em>Signal</em> en el teléfono del receptor desde la Play Store.</li>
           <li>Al recibir el mensaje de bienvenida desde el tótem, el receptor debe aceptar o confirmar el contacto para habilitar la recepción de llamadas.</li>
         </ol>
 
-        <p><strong>Importante:</strong> Si el receptor no acepta la conversación, las llamadas no se podrán iniciar correctamente.</p>
+        <div class="message warning">
+          Importante:</strong> Si el receptor no acepta la conversación, las llamadas no se podrán enlazar correctamente.
+        </div>
       </section>
 
       <section id="paso3" class="section">
         <h2 class="section-title">Paso 3 — Instalar KairosLauncher</h2>
         <p>Para instalar KairosLauncher en el tótem:</p>
         <ol>
-          <li>Abra Chrome en el tótem y visite <a href="https://yessmiguel.github.io/kairos-builds/" target="_blank">la página de descargas</a> proporcionada por el proveedor del sistema.</li>
+          <li>Abra Chrome en el tótem y visite la página de descargas <a href="https://yessmiguel.github.io/kairos-builds/" target="_blank">https://yessmiguel.github.io/kairos-builds/</a> proporcionada por el proveedor del sistema.</li>
           <li>Pulse el botón de descarga correspondiente a la versión de KairosLauncher.</li>
           <li>Siga las instrucciones de instalación del paquete APK en Android.</li>
         </ol>
         <p>Una vez instalado, confirme que la aplicación aparece en la lista de aplicaciones del tótem.</p>
       </section>
-
       <section id="paso4" class="section">
         <h2 class="section-title">Paso 4 — Verificar la instalación</h2>
         <p>Complete la siguiente lista de verificación para confirmar que la instalación fue exitosa:</p>
         <ul>
           <li><span class="check">✅</span> Micrófono conectado al hub USB y funcionando.</li>
-          <li><span class="check">✅</span> Botón SOS conectado al hub USB</li>
+          <li><span class="check">✅</span> Botón de emergencia conectado al hub USB</li>
           <li><span class="check">✅</span> Aplicación Signal instalada y configurada, con la conversación del receptor visible y activa en la pestaña de chats, corroborar ademas que es la primera conversación de la lista.</li>
           <li><span class="check">✅</span> App KairosLauncher instalada y visible en la lista de aplicaciones.</li>
-          <li><span class="check">✅</span> Reiniciar el tótem y confirmar que la publicidad se inicia automáticamente. Luego, realizar una prueba de llamada con el botón.</li>
+          <li><span class="check">✅</span> Reiniciar el tótem. Luego, confirmar que la publicidad se inicia automáticamente. Luego,realizar una prueba de llamada con el botón.</li>
           <li><span class="check">🚀</span> Si la llamada se realiza correctamente, la instalación se ha completado con éxito.</li>
         </ul>
+        <div class="message warning">
+          Una vez instalados los primeros tres pasos, hay que reiniciar el totem una vez para que las configuraciones pueden surtir efecto.
+        </div>
+        <div class="message error">
+            En caso de fallas o incovenientes ir a la seccion de <a href="#troubleshooting">troubleshooting</a>
+        </div>
       </section>
+      <div class="message warning">
+        En cada reninicio del tótem se debe de esperar hasta que se lance la publicidad para poder iniciar una prueba de llamada.
+      </div>
 
       <section id="troubleshooting" class="section">
-        <h2 class="section-title">Troubleshooting</h2>
+        <h2 class="section-title">Apéndice A - Troubleshooting</h2>
         <p>Problemas comunes y acciones recomendadas:</p>
         <ul>
-          <li><strong>La llamada no se puede concretar porque la aplicación Signal cambió su interfaz:</strong> Reinicie el tótem y si el problema persiste contacte al equipo de desarrollo.</li>
+          <li><strong>La llamada inicio y aparece el mensaje "Error de conexión" en Signal:</strong> Asegurar que el totem se encuentra conectado a Internet por el puerto Ethernet en la base, si persiste el problema abrir la carcasa para verificar que el cable Ethernet esta conectada en la compuerta trasera del totem. Finalmente reiniciar el tótem</li>
+          <li><strong>La llamada inicio y aparece el mensaje "Tu cámara está desactivada" en Signal:</strong> Asegurar que el tótem se encuentra conectado a Internet por el puerto Ethernet en la base, si persiste el problema abrir la carcasa para verificar que el cable Ethernet esta conectada en la compuerta trasera del totem. Finalmente reiniciar el tótem</li>
           <li><strong>Rendimiento interrumpido o la app se congela:</strong> Reinicie el tótem. Si el problema persiste, notifique a soporte y considere reinstalar la app.</li>
-          <li><strong>La aplicación se congela durante la llamada:</strong> Compruebe la conexión de red — utilice una red Wi‑Fi estable con al menos 80 Mbps y reinicie el tótem.</li>
+          <li><strong>La aplicación se congela durante la llamada:</strong> Apague el tótem, compruebe la conexión de red por el puerto Ethernet de la base — utilice una red WLAN estable con un mínimo de 80 Mbps. Reinicie el tótem.</li>
           <li><strong>Los scripts no se ejecutan por lentitud:</strong> Reinicie el tótem.</li>
-          <li><strong>Totem desconectado de la red:</strong> Reconectar el cable de red, verificar la conexión a internet y reiniciar el tótem.</li>
-          <li><strong>Botón o cablería del botón visiblemente dañada:</strong> Reemplace el botón o el cable según corresponda.</li>
-          <li><strong>La llamada se reinicia en bucle:</strong> Verificar que el botón y el micrófono estén correctamente conectados; reiniciar el tótem.</li>
+          <li><strong>Totem desconectado de la red:</strong> Reconectar el cable de red Ethernet a la base, verificar la conexión a internet y reiniciar el tótem.</li>
+          <li><strong>La llamada se reinicia en bucle:</strong> Verificar que el <strong>Botón de emergencia</strong> y el micrófono estén correctamente conectados; reiniciar el tótem.</li>
+          <li><strong>La llamada no se puede concretar porque la aplicación Signal cambió su interfaz:</strong> Reinicie el tótem y si el problema persiste contacte al equipo de desarrollo.</li>
+          <li><strong>Botón o cablería del botón visiblemente dañada:</strong> Reemplace el botón o el cable según corresponda y reinicie el tótem</li>
+        </ul>
+      </section>
+      <section id="glosario" class="section">
+        <h2 class="section-title">Apéndice B - Operación del tótem</h2>
+        <p> Este es el resumen de operaión del totem</p>
+        <ul>
+          <li><strong>Prender el tótem</strong>: Se prende el totem conectando el cable de corriente de la base</li>
+          <li><strong>Apagar el tótem</strong>: Se prende el totem desconectando el cable de corriente de la base</li>
+          <li><strong>Reiniciar el totem</strong>: Se reinicia el totem deconectando el cable y volviendo a conectar </li>
+          <li><strong>Abrir carcasa</strong>: El tótem tiene dos llaves de seguridad de lado izquierdo, para abrir cada una de ellas: Insertar la llave, girar a la derecha hasta notar el tope (giro completo) y esperar a que el perno se bote por completo. Una vez desplegado el perno, tirar (jalar) suavemente para abrir la tapa. Se recomienda no forzar la tapa ya que esta debe salir fácilmente </li>
+          <li><strong>Cerra carcasa</strong>: Juntar la carcasa hasta que quede bien pegada y simplemente empujar hacia adentro cada botón </li>
+          <li><strong>Barra de inicio desaparece</strong>: Si se desaparece la barra de inicio (barra negra con iconos blancos) basta con dezplazar rapidamente el cursos hacia abajo para que vuelva aparecer </li>
         </ul>
       </section>
 
@@ -177,15 +254,15 @@
         <h2 class="section-title">Notas y enlaces</h2>
         <p>Enlaces útiles:</p>
         <ul>
-          <li><a href="https://yessmiguel.github.io/kairos-builds/" target="_blank">Repositorio de builds de Kairos</a></li>
+          <li><a href="https://yessmiguel.github.io/kairos-builds/" target="_blank">Repositorio de builds de MediKairos</a></li>
         </ul>
-        <p>Si necesita soporte adicional, incluya en su solicitud: modelo del tótem, y descripción detallada del comportamiento observado y checklist de hardware conectado.</p>
+        <p>Si necesita soporte adicional, incluya en su solicitud: modelo del tótem y descripción detallada del comportamiento observado y checklist de hardware conectado, asi como la verificacion del internet.</p>
       </section>
     </div>
 
     <aside class="side-card">
       <h3 style="margin-top:0">Resumen rápido</h3>
-      <p class="pre"><strong>Objetivo:</strong> Instalar y verificar el sistema Kairos en un tótem Android para permitir llamadas SOS entre el tótem y un receptor.</p>
+      <p class="pre"><strong>Objetivo:</strong> Instalar y verificar el sistema MediKairos en un tótem Android para permitir llamadas SOS entre el tótem y un receptor.</p>
       <p class="pre"><strong>Tiempo estimado de instalación:</strong> 30–45 minutos por tótem (dependiendo de la familiaridad del instalador con Android).</p>
       <h4>Checklist</h4>
       <ul>
