@@ -61,6 +61,29 @@
         // Lista manual de APKs; solo debes añadir los nuevos
         const apks = [
             "kairos-launcherv2.1.0.apk",
+        ];
+
+        const list = document.getElementById('apkList');
+
+        apks.forEach(file => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = file;
+            a.textContent = file;
+            li.appendChild(a);
+            list.appendChild(li);
+        });
+    </script>
+
+
+
+    <h1>Kairos APKs - (development)</h1>
+    <ul id="apkList"></ul>
+    <p> APKs para desarollo solamente: </p>
+
+    <script>
+        // Lista manual de APKs; solo debes añadir los nuevos
+        const apks = [
             "kairos-clientv1.0.0.apk",
         ];
 
